@@ -16,8 +16,9 @@ The ability to have the full E2E code and be able to edit this allows any aspect
 A power point presentation is included to illustrate, at a high level, its features and design. There is also a complete ESSENCE course describing
 the essentials of Essence.
 
-The tool provides the minimum viable solution to quickly explore Essence for free. It provides no security, scalability, reliability etc and is designed as a single person 
-desktop application. Please do not expose the tool to the internet.
+The tool provides the bare minimum viable solution to quickly explore Essence for free. It is not designed as a robust commercial product.
+It provides no security, scalability, reliability etc and is designed as a single person desktop application for research. 
+Please do not expose the tool to the internet.
 
 To use the application first install SWIPL prolog: https://www.swi-prolog.org/
 

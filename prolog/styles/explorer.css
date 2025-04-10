@@ -1,0 +1,95 @@
+
+.themed-col-customer {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(44, 249, 109, 0.15);
+  border: 1px solid rgba(112.520718, 44.062154, 249.437846, .3); 
+}
+
+.themed-col-solution {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(249, 249, 44, 0.15);
+  border: 1px solid rgba(112.520718, 44.062154, 249.437846, .3); 
+} 
+
+.themed-col-endeavour {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(9, 25, 243, 0.15);
+  border: 1px solid rgba(112.520718, 44.062154, 249.437846, .3); 
+} 
+
+.themed-container {
+  padding: .75rem;
+  margin-bottom: 1.5rem;
+  background-color: rgba(112.520718, 44.062154, 249.437846, .15);
+  border: 1px solid rgba(112.520718, 44.062154, 249.437846, .3);
+}
+
+.card-customer {
+  background-color: rgba(13, 249, 99, 0.15);
+}
+
+.card-solution {
+    background-color: rgba(242, 249, 44, 0.15);
+}
+
+.card-endeavour {
+    background-color: rgba(32, 74, 244, 0.542);
+}
+
+.essence-enterprise {
+  background-color: rgba(234, 123, 132, 0.15);
+}
+
+.essence-customer {
+  background-color: rgba(14, 204, 125, 0.15);
+}
+
+.essence-solution {
+  background-color: rgba(215, 212, 14, 0.15);
+}
+
+.essence-endeavour {
+  background-color: rgba(8, 179, 198, 0.15);
+}
+
+.concernButtons {
+  background-color: rgb(255, 255, 255);
+}
+
+.practice-cards {
+  background-color: rgba(221, 130, 243, 0.15);
+  border: 2px solid rgba(92, 18, 239, 0.3);
+}
+
+p { text-align: left }
+
+li { text-align: left }
+
+.form-check { text-align: left } 
+
+.form-control {
+  border: 2px solid rgba(53, 10, 139, 0.3);
+}
+
+.dropdown-item-checked::before {
+  position: absolute;
+  left: .1rem;
+  content: '✓';
+  font-weight: 600;
+}
+
+#drawContainer {
+  width: 1400px;
+  height: 700px;
+  overflow: auto; 
+  border: 2px solid;
+}
+#drawCanvas{
+  display: block;
+}
+
+
+

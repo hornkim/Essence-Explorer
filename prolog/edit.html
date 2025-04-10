@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <script src="assets/jquery/jquery.min.js"></script>
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/utility.js"></script>
+    <script src="scripts/webelements.js"></script>
+    <script src="scripts/webprolog.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="author" content="Kim Horn">
+    <title>Essence Editer</title>
+
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/ico" rel="noopener" target="_blank" href="/images/favicon.ico">
+    <link rel="stylesheet" href="assets/dist/css/font-awesome.min.css">
+    <link href="styles/explorer.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Essence Editor</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="fileDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            File
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="ProjectDropdown">
+                            <li><a class="dropdown-item load-project-item" href="#">Load Project</a></li>
+                            <li><a class="dropdown-item new-project-item" href="#">New Project</a></li>
+                            <li><a class="dropdown-item" href="#">Save</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="validateDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Validate
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                            <li><a class="dropdown-item validate-dropdown-item" href="#">Check</a></li>
+                            <li><a class="dropdown-item validate-dropdown-item" href="#">Missing</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Explore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!----------------- The Main Container ------------->
+
+    <div class="container-fluid themed-container">
+
+        <main>
+            <form>
+                <div class="shadow p-2  mb-2 bg-body rounded">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                    id="dropdownEditButtonPractice" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Choose Practice
+                                </button>
+                                <ul id="editPracticeList" class="dropdown-menu"
+                                    aria-labelledby="dropdownEditButtonPractice">
+                                    <!-- add drop down items here -->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <h3 id="editPracticeName"></h3>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                    id="dropdownEditButtonConcern" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Choose Concern
+                                </button>
+                                <ul id="editConcernList" class="dropdown-menu"
+                                    aria-labelledby="dropdownEditButtonConcern">
+                                    <li><a class="dropdown-item" elementID='concern'>Customer</a></li>
+                                    <li><a class="dropdown-item" elementID='solution'>Solution</a></li>
+                                    <li><a class="dropdown-item" elementID='endeavour'>Endeavour</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <h3 id="editConcernName"></h3>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-------------------------------- The Alpha and State ---------------------------------->
+
+            <div class="accordion py-3" id="accordionEssence">
+                <div class="accordion-item">
+                    <h1 class="accordion-header" id="headingEditAlpha">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseAlpha" aria-expanded="true" aria-controls="collapseAlpha">
+                            Alpha
+                        </button>
+                    </h1>
+                    <div id="collapseAlpha" class="accordion-collapse collapse show" aria-labelledby="headingEditAlpha">
+                        <div class="accordion-body">
+
+                            <form>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="alphaName" class="form-label">Name</label>
+                                            <input class="form-control" id="alphaName">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="alphaID" class="form-label">ID</label>
+                                            <input class="form-control" id="alphaID">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="alphaDesc" class="form-label">Description</label>
+                                    <textarea class="form-control" rows="3" id="alphaDesc"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="stateNames" class="form-label">State Names List (Comma)</label>
+                                    <input class="form-control" id="stateNames">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="stateIDs" class="form-label">State ID List (Comma)</label>
+                                    <input class="form-control" id="stateIDs">
+                                </div>
+                                <button type="button" id="createAlpha" class="btn btn-primary">Create</button>
+                                <div>
+                                    <br>
+                                    <p id="alphaAddResult">Result</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-------------------------------- The WPS  and Checks ---------------------------------->
+
+                <div class="accordion py-3" id="accordionEssence">
+                    <div class="accordion-item">
+                        <h1 class="accordion-header" id="headingEditAlpha">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseAlpha" aria-expanded="true" aria-controls="collapseAlpha">
+                                Work Products
+                            </button>
+                        </h1>
+                        <div id="collapseAlpha" class="accordion-collapse collapse show"
+                            aria-labelledby="headingEditAlpha">
+                            <div class="accordion-body">
+
+                                <form>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="wpName" class="form-label">Name</label>
+                                                <input class="form-control" id="wpName">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="wpID" class="form-label">ID</label>
+                                                <input class="form-control" id="wpID">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="wpDesc" class="form-label">Description</label>
+                                        <textarea class="form-control" rows="3" id="wpDesc"></textarea>
+                                    </div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle" type="button"
+                                            id="dropdownMenuButtonAlphaList" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Choose Alpha
+                                        </button>
+                                        <ul id="alphaElementList" class="dropdown-menu"
+                                            aria-labelledby="dropdownMenuButtonAlphaList">
+                                            <!-- add drop down items here -->
+                                        </ul>
+                                    </div>
+                                    <br>
+                                    <div class="mb-3">
+                                        <label for="checkNames" class="form-label">Check Names List (Comma)</label>
+                                        <input class="form-control" id="checkNames">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="checkIDs" class="form-label">Check ID List (Comma)</label>
+                                        <input class="form-control" id="checkIDs">
+                                    </div>
+                                    <button type="button" id="createWP" class="btn btn-primary">Create</button>
+                                    <div>
+                                        <br>
+                                        <p id="wpAddResult">Result</p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-------------------------------- The Activity and Actions ---------------------------------->
+
+                    <div class="accordion py-3" id="accordionEssence">
+                        <div class="accordion-item">
+                            <h1 class="accordion-header" id="headingEditActivity">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseEmpty" aria-expanded="true" aria-controls="collapseEmpty">
+                                    Activity
+                                </button>
+                            </h1>
+                            <div id="collapseEmpty" class="accordion-collapse collapse show"
+                                aria-labelledby="headingEditActivity">
+                                <div class="accordion-body">
+
+                                    <form>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="mb-3">
+                                                    <label for="activityName" class="form-label">Name</label>
+                                                    <input class="form-control" id="activityName">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="mb-3">
+                                                    <label for="activityID" class="form-label">ID</label>
+                                                    <input class="form-control" id="activityID">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="activityDesc" class="form-label">Description</label>
+                                            <textarea class="form-control" rows="3" id="activityDesc"></textarea>
+                                        </div>
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" type="button"
+                                                id="dropdownMenuButtonActSpace" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                Choose Activity Space
+                                            </button>
+                                            <ul id="activitySpaceElementList" class="dropdown-menu"
+                                                aria-labelledby="dropdownMenuButtonActSpace">
+                                                <!-- add drop down items here -->
+                                            </ul>
+                                        </div> 
+                                        <br>
+                                      
+                                        <button type="button" id="createActivity"
+                                            class="btn btn-primary">Create</button>
+                                        <div>
+                                            <br>
+                                            <p id="activityAddResult">Result</p>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-------------------------------- The HTML Editor ---------------------------------->
+
+                    <div class="accordion py-3" id="accordionEssence">
+                        <div class="accordion-item">
+                            <h1 class="accordion-header" id="headingHTML">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseHTML" aria-expanded="true" aria-controls="collapseHTML">
+                                    HTML WYSIWYG Editor
+                                </button>
+                            </h1>
+                            <div id="collapseHTML" class="accordion-collapse collapse show"
+                                aria-labelledby="headingHTML">
+                                <div class="accordion-body">
+                                    <div class="shadow p-2  mb-2 bg-body rounded">
+                                        <trix-editor></trix-editor>
+                                    </div>
+                                    <p></p>
+                                    <div class="shadow p-2  mb-2 bg-body rounded">
+                                        <div id="myHtml"> HTML is here </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="accordion py-3" id="accordionEssence">
+                            <div class="accordion-item">
+                                <h1 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseEmpty" aria-expanded="true"
+                                        aria-controls="collapseEmpty">
+                                        Empty
+                                    </button>
+                                </h1>
+                                <div id="collapseEmpty" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne">
+                                    <div class="accordion-body">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+        </main>
+    </div>
+</body>
+
+</html>

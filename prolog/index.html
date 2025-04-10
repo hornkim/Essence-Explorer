@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+  <script src="assets/jquery/jquery.min.js"></script>
+  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="scripts/utility.js"></script>
+  <script src="scripts/webevents.js"></script>
+  <script src="scripts/webprolog.js"></script>
+  <script src="scripts/movedraw.js"></script>
+  <script src="scripts/drawicons.js"></script>
+  <script src="scripts/drawdiagram.js"></script>
+  <script src="scripts/webapp.js"></script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content>
+  <meta name="author" content="Kim Horn">
+  <title>Essence Explorer</title>
+
+  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/ico" rel="noopener" target="_blank" href="/images/favicon.ico">
+  <link rel="stylesheet" href="assets/dist/css/font-awesome.min.css">
+  <link href="styles/explorer.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Essence Explorer</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="fileDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              File
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="ProjectDropdown">
+              <li><a class="dropdown-item load-project-item" href="#">Load Project</a></li>
+              <li><a class="dropdown-item new-project-item" href="#">New Project</a></li>
+              <li><a class="dropdown-item" href="#">Save</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="filterDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Filter
+            </a>
+            <ul class="dropdown-menu"  id="practiceFilterList" aria-labelledby="filterDropdown">
+              <!-- add drop down elements here  -->
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="edit.html">Edit</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#">Help</a>
+          </li>
+        </ul>
+        
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" id="searchField" aria-label="Search">
+          <button class="btn btn-outline-light" id="searchBtn" type="button">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!----------------- The Main Container ------------->
+
+  <div class="container-fluid themed-container">
+
+    <main>
+      <div class="row elementChoice py-3 ">
+
+        <div class="col-md-8">
+
+          <h3> Choose an Element: </h3>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFilter" id="alpha">
+            <label class="form-check-label" for="alpha">Alpha</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFilter" id="competency">
+            <label class="form-check-label" for="competency">Competencies/Roles</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFilter" id="activity_space">
+            <label class="form-check-label" for="activity_space">Activity Spaces</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFilter" id="activity">
+            <label class="form-check-label" for="activity">Activities</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFilter" id="work_product">
+            <label class="form-check-label" for="work_product">Work Product</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFilter" id="pattern">
+            <label class="form-check-label" for="pattern">Pattern</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFilter" id="resource">
+            <label class="form-check-label" for="resource">Resource</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <button type="button" id="collapseAll" class="btn btn-primary">Collapse All</button>
+          </div>
+          <div class="form-check form-check-inline form-switch">
+            <input class="form-check-input" type="checkbox" id="toggleAcc" checked value="1">
+            <label class="form-check-label" id="AccordianToggle" for="toggleAcc">Single View</label>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+          <h2 id="projectHeading"></h2>
+        </div>
+      </div>
+
+      <!-- The Row with the Three rows of Concerns with Element Buttons Inside  -->
+      <div class="row py-3 px-3 concernButtons ">
+          <!-- Make and Add the concern rows in here -->
+      </div>
+
+      <!-------------------------------- The Alpha and State ---------------------------------->
+      <div class="accordion py-3" id="accordionEssence">
+        <div class="accordion-item">
+          <h1 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlpha"
+              aria-expanded="true" aria-controls="collapseAlpha">
+              Alpha
+            </button>
+          </h1>
+          <div id="collapseAlpha" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+            <div class="accordion-body">
+              <div class="form-group row py-3">
+                <div class="col-sm-2">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonAlpha"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Alpha
+                    </button>
+                    <ul id="alphaList" class="dropdown-menu" aria-labelledby="dropdownMenuButtonAlpha">
+                      <!-- add drop down items here -->
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <button type="button" id="showAllAlpha" class="btn btn-primary">Show All</button>
+                </div>
+              </div>
+
+              <!-- The Alphas and State Card Row -->
+              <div class="form-group row py-3 alpha-card">
+
+                <!-- The Alpha Card  -->
+                <div id="alpha-1" class="col-md-5 alpha-theme themed-col-customer ">
+                  <div class="row ">
+                    <div class="col-md-3">
+                      <img src="/images/alpha.png" width="128" height="64">
+                    </div>
+                    <div class="col-md-9 text-center">
+                      <h1 id="alphaTitle">Title</h1>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4 alpha-theme themed-col-customer gx-5 stateBtnCol">
+                      <!-- Add the State Buttons in here -->
+                    </div>
+                    <div class="col-md-8 alpha-theme themed-col-customer">
+                      <div id="alphaDescriptionTxt"></div>
+                      <p id="alphaPrompt"></p>
+                      <ul id="alphaPointsList">
+                      </ul>
+                      <div id="alphaResourceBtn" class="openResourceBtn" ></div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 alpha-theme themed-col-customer gx-5 ">
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Associations</h4>
+                        <ul id="alphaAssociations"></ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 alpha-theme themed-col-customer gx-5 ">
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Parent</h4>
+                        <ul id="alphaParent"></ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2"> </div>
+
+                <!-- The State Card  -->
+                <div class="col-md-5 alpha-theme themed-col-customer">
+                  <div class="row ">
+                    <div class="col-md-3 text-center">
+                      <img src="/images/alpha.png" width="128" height="64">
+                      <h4>State</h4>
+                    </div>
+                    <div class="col-md-9 text-center">
+                      <h1 id="stateTitle">Title</h1>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 alpha-theme themed-col-customer gx-5 ">
+                      <div id="state_description"></div>
+                      <div class="checkStateDetail checkSpace">
+                        <!-- Add the Check Item in here -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Alphas -->
+            </div>
+          </div>
+        </div>
+
+
+        <!-------------------------------- The Competency ---------------------------------->
+        <div class="accordion-item">
+          <h1 class="accordion-header" id="headingComp">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseCompetency" aria-expanded="false" aria-controls="collapseCompetency">
+              Competency / Roles
+            </button>
+          </h1>
+          <div id="collapseCompetency" class="accordion-collapse collapse" aria-labelledby="headingComp">
+            <div class="accordion-body">
+              <div class="form-group row py-3">
+                <div class="col-sm-3">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonCompetency"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Competency
+                    </button>
+                    <ul id="competencyList" class="dropdown-menu" aria-labelledby="dropdownMenuButtoncwCompetency">
+                      <!-- add drop down items here -->
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-5">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonRoles"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Role
+                    </button>
+                    <ul id="roleList" class="dropdown-menu" aria-labelledby="dropdownMenuButtonRoles">
+                      <!-- add drop down items here -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- The Competency Card Row -->
+              <div class="form-group row py-3 ">
+
+                <!-- The Competency Card  -->
+                <div class="col-md-5 competency-theme themed-col-customer competency-card ">
+                  <div class="row ">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                      <img src="/images/competency.svg" width="64" height="64">
+                    </div>
+                    <div class="col-md-8 text-center">
+                      <h1 id="competencyTitle">Title</h1>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 competency-theme themed-col-customer gx-5 ">
+                      <p id="competencySummary">Summary</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 competency-theme themed-col-customer gx-5 ">
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Levels</h4>
+                        <div class="row ">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-8" id="compDetailBtnCol">
+                            <div class="col-md-2"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Level Description</h4>
+                        <p id="typeDescription"></p>
+                        <p id="levelDescription"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2"></div>
+
+                <!-- ROLE -->
+                <div class="col-md-5 role-theme themed-col-customer role-card">
+                  <div class="row ">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                      <img src="/images/role.svg" width="64" height="64">
+                    </div>
+                    <div class="col-md-8 text-center">
+                      <h1 id="roleTitle">Role</h1>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 role-theme themed-col-customer gx-5 ">
+                      <div id="roleDescriptionTxt"></div>
+                      <p id="rolePrompt"></p>
+                      <ul id="rolePointsList"></ul>
+                      <div class="roleButtons">
+                        <!-- Add the Activity Buttons in here -->
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 role-theme themed-col-customer gx-5 ">
+                          <div class="shadow p-2  mb-2 bg-body rounded">
+                            <h4>Associations</h4>
+                            <ul id="roleAssociations"></ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Competencies -->
+            </div>
+          </div>
+        </div>
+
+
+        <!-------------------------------- Activity Space ---------------------------------->
+        <div class="accordion-item">
+          <h1 class="accordion-header" id="headingActSpace">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseActSpace" aria-expanded="false" aria-controls="collapseActSpace">
+              Activity Space
+            </button>
+          </h1>
+          <div id="collapseActSpace" class="accordion-collapse collapse" aria-labelledby="headingActSpacee">
+            <!-- data-bs-parent="#accordionEssence">  -->
+            <div class="accordion-body">
+
+              <div class="form-group row py-3">
+                <div class="col-sm-2">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonActSpace"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Activity Space
+                    </button>
+                    <ul id="activitySpaceList" class="dropdown-menu" aria-labelledby="dropdownMenuButtonActSpace">
+                      <!-- add drop down items here -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row py-3 activityspace-card">
+                <!-- The Activities Space Card  -->
+                <div class="col-md-5 act-space-theme themed-col-customer ">
+                  <div class="row ">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                      <img src="/images/activity_space.png" width="64" height="64">
+                    </div>
+                    <div class="col-md-8 text-center">
+                      <h1 id="activitySpaceTitle">Title</h1>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 act-space-theme themed-col-customer gx-5 ">
+                      <div id="activitySpaceDescriptionTxt"></div>
+                      <p id="activitySpacePrompt"></p>
+                      <ul id="activitySpacePointsList"></ul>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Input</h4>
+                        <p id="activitySpaceInputs"></p>
+                      </div>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Entry</h4>
+                        <ul id="activitySpaceEntry"></ul>
+                      </div>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Completion</h4>
+                        <ul id="activitySpaceCompletion"></ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2"></div>
+
+                <!-- Activty Space Activity Buttons List-->
+                <div class="col-md-5">
+                  <div class="row">
+                    <!-- -->
+                    <h2>Activities</h2>
+                    <div class="col-md-12 act-space-theme themed-col-customer gx-5 activitySpaceBtnCol">
+                      <!-- Add the Activity Buttons in here -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Activity -->
+            </div>
+          </div>
+        </div>
+
+        <!-------------------------------- Activity ---------------------------------->
+        <div class="accordion-item">
+          <h1 class="accordion-header" id="headingActivity">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseActivity" aria-expanded="false" aria-controls="collapseActivity">
+              Activity
+            </button>
+          </h1>
+          <div id="collapseActivity" class="accordion-collapse collapse" aria-labelledby="headingActivity">
+            <div class="accordion-body">
+
+              <div class="form-group row py-3">
+                <div class="col-sm-2">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonActivity"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Activity
+                    </button>
+                    <ul id="activityList" class="dropdown-menu" aria-labelledby="dropdownMenuButtonActivity">
+                      <!-- add drop down items here -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row py-3 activity-card">
+
+                <!-- The Activities card  -->
+                <div class="col-md-7 activity-theme themed-col-customer">
+                  <div class="row ">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                      <img src="/images/activity.png" width="64" height="64">
+                    </div>
+                    <div class="col-md-8 text-center">
+                      <h1 id="activityTitle">Title</h1>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 activity-theme themed-col-customer gx-5">
+                      <div id="activityDescriptionTxt"></div>
+                      <p id="activityPrompt"></p>
+                      <ul id="activityPointsList">
+                      </ul>
+
+                      <div class="shadow p-2  mb-2 bg-body rounded activitySpaceBtnLink">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <h4 >Activity Space</h4>
+                          </div>
+                          <div class="col-md-4">
+                            <div id="activitySpaceLink"></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Entry</h4>
+                        <ul id="activityEntry"></ul>
+                      </div>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Competencies and Roles</h4>
+                        <p id="activityCompetencies"></p>
+                        <p id="activityRoles"></p>
+                      </div>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Achieves</h4>
+                        <ul id="activityAchieves"></ul>
+                      </div>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Contributes To</h4>
+                        <ul id="activityContributes"></ul>
+                      </div>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Patterns</h4>
+                        <ul id="activityPatterns"></ul>
+                      </div>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Associations</h4>
+                        <ul id="activityAssociations"></ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-1"></div>
+
+                <!-- Activty Elements Buttons List-->
+                <div class="col-md-4">
+                  <div class="row">
+                    <!-- -->
+                    <h2>Elements Impacted</h2>
+                    <div class="col-md-12 activity-theme themed-col-customer gx-5 activityBtnCol">
+                      <!-- Add the Element Buttons in here -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Activity -->
+            </div>
+          </div>
+        </div>
+
+
+        <!-------------------------------- The Work Product ---------------------------------->
+        <div class="accordion-item">
+          <h1 class="accordion-header" id="headingWork">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseWorkProd" aria-expanded="false" aria-controls="collapseWorkProd">
+              Work Product
+            </button>
+          </h1>
+          <div id="collapseWorkProd" class="accordion-collapse collapse" aria-labelledby="headingWork">
+            <div class="accordion-body">
+
+              <div class="form-group row py-3">
+                <div class="col-sm-2">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonWP"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Work Product
+                    </button>
+                    <ul id="wpList" class="dropdown-menu" aria-labelledby="dropdownMenuButtonWP">
+                      <!-- add drop down items here -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- The WorkProduct and Detail Card Row -->
+              <div class="form-group row py-3 wp-card">
+
+                <!-- The WorkProduct Card  -->
+                <div class="col-md-5 wp-theme themed-col-customer">
+                  <div class="row ">
+                    <div class="col-md-3">
+                      <img src="/images/work_product.png" width="80" height="64">
+                    </div>
+                    <div class="col-md-9 text-center">
+                      <h1 id="wpTitle">Title</h1>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <!-- -->
+                    <div class="col-md-6 wp-theme themed-col-customer gx-5 wpDetailBtnCol">
+                      <!-- Add the State Buttons in here -->
+                    </div>
+                    <!-- themed-col-customer-->
+                    <div class="col-md-6 wp-theme themed-col-customer">
+                      <div id="wpDescriptionTxt"></div>
+                      <p id="wpPrompt"></p>
+                      <ul id="wpPointsList">
+                      </ul>
+                      <div id="wpResourceBtn" class="openResourceBtn" ></div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 wp-theme themed-col-customer gx-5 ">
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <p id="wpAlpha"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2"> </div>
+
+                <!-- The WorkProduct Detail Card  -->
+                <div class="col-md-5 wp-theme themed-col-customer">
+                  <div class="row ">
+                    <div class="col-md-3 text-center"">
+                      <img src="/images/work_product.png" width="80" height="64">
+                      <h4>Detail</h4>
+                    </div>
+                    <div class="col-md-9 text-center">
+                      <h1 id="wpDetailTitle">Title</h1>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 wp-theme themed-col-customer gx-5 ">
+                      <div id="wpDetailDescriptionTxt">Description</div>
+                      <p id="wpdPrompt"></p>
+                      <ul id="wpdPointsList">
+                      </ul>
+                      <p id="wpDetail_option">Option</p>
+                      <div class="checkWPDetail checkSpace">
+                        <!-- Add the Check Item in here -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- End WPS -->
+            </div>
+          </div>
+        </div>
+
+        <!-------------------------------- Patterns ---------------------------------->
+        <div class="accordion-item">
+          <h1 class="accordion-header" id="headingPattern">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapsePattern" aria-expanded="false" aria-controls="collapsePattern">
+              Pattern
+            </button>
+          </h1>
+          <div id="collapsePattern" class="accordion-collapse collapse" aria-labelledby="headingPattern">
+            <div class="accordion-body">
+
+              <div class="form-group row py-3">
+                <div class="col-sm-2">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonPattern"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Pattern
+                    </button>
+                    <ul id="patternList" class="dropdown-menu" aria-labelledby="dropdownMenuButtonPattern">
+                      <!-- add drop down items here -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row py-3 pattern-card">
+
+                <!-- The Patterns card  -->
+                <div class="col-md-7 pattern-theme themed-col-customer">
+                  <div class="row ">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                      <img src="/images/pattern.png" width="64" height="64">
+                    </div>
+                    <div class="col-md-8 text-center">
+                      <h1 id="patternTitle">Title</h1>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 pattern-theme themed-col-customer gx-5">
+                      <div id="patternDescriptionTxt"></div>
+                      <h4 id="patternType"></h4>
+                      <div id="patternResourceBtn" class="openResourceBtn" ></div>
+                      <br>
+                      <div class="shadow p-2  mb-2 bg-body rounded">
+                        <h4>Associations</h4>
+                        <ul id="patternAssociations"></ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5"></div>
+              </div>
+              <!-- End Activity -->
+
+            </div>
+          </div>
+        </div>
+
+        <!-------------------------------- Practice ---------------------------------->
+        <div class="accordion-item">
+          <h1 class="accordion-header" id="headingPractice">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapsePractice" aria-expanded="false" aria-controls="collapsePractice">
+              Practice
+            </button>
+          </h1>
+          <div id="collapsePractice" class="accordion-collapse collapse" aria-labelledby="headingPractice">
+            <div class="accordion-body">
+
+              <div class="form-group row py-3">
+                <div class="col-sm-2">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonPractice"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Choose Practice
+                    </button>
+                    <ul id="practiceList" class="dropdown-menu" aria-labelledby="dropdownMenuButtonPractice">
+                      <!-- add drop down items here -->
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <h3 id="practiceName"></h3>
+                </div>
+                <div id="practiceDescriptionTxt"></div>
+                <div id="practiceResourceBtn" class="openResourceBtn" ></div>
+              </div>
+
+              <div class="row py-3 px-3 practiceButtons ">
+                <div class="form-group row">
+                  <div class="card practice-cards">
+                    <div class="card-body ">
+                      <div class="row">Alpha</div>
+                      <div class="row alpha-pcard practiceBtnCol">
+                        <!-- fill with stuff-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="card practice-cards">
+                    <div class="card-body">
+                      <div class="row">Competency</div>
+                      <div class="row competency-pcard practiceBtnCol">
+                        <!-- fill with stuff-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="card practice-cards">
+                    <div class="card-body">
+                      <div class="row">Role</div>
+                      <div class="row role-pcard practiceBtnCol">
+                        <!-- fill with stuff-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="card practice-cards">
+                    <div class="card-body">
+                      <div class="row">Activity Space</div>
+                      <div class="row activity_space-pcard practiceBtnCol">
+                        <!-- fill with stuff-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="card practice-cards">
+                    <div class="card-body">
+                      <div class="row">Activity</div>
+                      <div class="row activity-pcard practiceBtnCol">
+                        <!-- fill with stuff-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="card practice-cards">
+                    <div class="card-body">
+                      <div class="row">Work Product</div>
+                      <div class="row work_product-pcard practiceBtnCol">
+                        <!-- fill with stuff-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="card practice-cards">
+                    <div class="card-body">
+                      <div class="row">Pattern</div>
+                      <div class="row pattern-pcard practiceBtnCol ">
+                        <!-- fill with stuff-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Practice Cards -->
+            </div>
+          </div>
+        </div>
+
+        <!--------------------------------  Canvas  ---------------------------------->
+        <div class="accordion-item">
+          <h1 class="accordion-header" id="headingCanvas">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseCanvas" aria-expanded="false" aria-controls="collapseCanvas">
+              Asssociations
+            </button>
+          </h1>
+          <div id="collapseCanvas" class="accordion-collapse collapse" aria-labelledby="headingCanvas">
+            <div class="accordion-body">
+              <div class="row">
+                <div class="col-sm-1">
+                  <div class="row py-3">
+                    <button type="button" id="stopCanvas" class="btn btn-primary">Stop</button>
+                  </div>
+                  <div class="row py-3">
+                    <button type="button" id="clearCanvas" class="btn btn-primary">Clear</button>
+                  </div>
+                  <div class="row py-3">
+                    <button type="button" id="deleteCanvas" class="btn btn-primary">Delete</button>
+                  </div>
+                </div>
+
+                <div class="col-sm-11">
+                  <div class="overflow-auto" id="drawContainer">
+                    <canvas id="drawCanvas" width="2200" height="1000">
+                      This browser does not support HTML5 Canvas.
+                    </canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  </div>
+  </main>
+
+
+<!------------------------------------------------
+------          The LOAD project Modal         ----
+--------------------------------------------------->
+  <div class="modal" id="load-project-modal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Choose Project</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuButtonProject"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Project
+            </button>
+            <ul id="projectList" class="dropdown-menu" aria-labelledby="dropdownMenuButtonProject">
+            </ul>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button id="loadProjectOKBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+<!------------------------------------------------
+------          The NEW Project Modal         ----
+------------------------------------------------->
+  <div class="modal" id="new-project-modal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">New Project</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+            <input id="newProjectTxt" type="text" class="form-control" aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default">
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button id="newProjectOKBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

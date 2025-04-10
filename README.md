@@ -26,7 +26,8 @@ To use the application first install SWIPL prolog: https://www.swi-prolog.org/
 To start the application, from the top level, execute: swipl prolog/semat_server.pl
 
 In a browser go to http://localhost:8000/
-There is no manual yet. The edit page allows you to create prolog code for a few of the Essence Entities. You need to paste the code generated into the app.
+There is no manual yet but the PDF prvides some explanation. The edit page allows you to create prolog code for a few of the Essence Entities. You need to paste the code generated into the app.
+The chatbot code will come soon.
 
 Thanks
 Kim Horn

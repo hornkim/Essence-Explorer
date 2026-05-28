@@ -13,6 +13,9 @@ of REST-ish APIs, allowing front ends to be explored, changed and developed inde
 The model contents have been derived from the  Essence OMG standard and the public examples provided by Ivar Jacobsen International. 
 There has been no exhaustive review of the code or models for validity. There is no relationship between the Author and Ivar Jacobsen Int.
 
+The simplest approaches have been taken. Basic forms of PROLOG, little to no javascript libraries. Bootstrap is the exception.
+The aim is to make is as simple as possible.
+
 The ability to have the full E2E code and be able to edit this allows any aspect of Essence to be experimented with, researched and changed.
 A power point presentation is included to illustrate, at a high level, its features and design. There is also a complete ESSENCE course describing
 the essentials of Essence.
